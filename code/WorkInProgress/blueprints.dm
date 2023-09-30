@@ -53,6 +53,7 @@
 	var/obj/item/blueprint/current_bp = null
 	var/locked = FALSE
 	var/paused = FALSE
+	var/do_pressurize = TRUE
 	var/off_x = 0
 	var/off_y = 0
 
@@ -98,6 +99,7 @@
 			"Dump Materials",
 			"Eject Blueprint",
 			"Cancel Build",
+			"Toggle Auto-Pressurize",
 		)
 		var/user_input = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", option_list)
 		if (!user_input) return
@@ -164,6 +166,13 @@
 					boutput(user, "<span class='alert'>There's no build in progress.</span>")
 					return
 				src.end_build()
+
+			if ("Toggle Auto-Pressurize")
+				src.do_pressurize = !src.do_pressurize
+				if (src.do_pressurize)
+					boutput(user, "<span class='notice'>After ending a build, built floors will now be pressurized to standard air mix.</span>")
+				else
+					boutput(user, "<span class='notice'>No longer pressurizing built floors to standard air mix.</span>")
 		return
 
 	process()
