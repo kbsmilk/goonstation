@@ -322,8 +322,8 @@
 					else
 						var/datum/gas_mixture/gas_add = new /datum/gas_mixture
 						gas_add.temperature = T20C
-						gas_add.oxygen = MOLES_O2STANDARD - T.air.oxygen
-						gas_add.nitrogen = MOLES_N2STANDARD - T.air.nitrogen
+						gas_add.oxygen = clamp(MOLES_O2STANDARD - T.air.oxygen, 0, INFINITY)
+						gas_add.nitrogen = clamp(MOLES_N2STANDARD - T.air.nitrogen, 0, INFINITY)
 						T.assume_air(gas_add)
 			src.turfs_to_pressurize = new/list
 
